@@ -15,6 +15,7 @@ import ManageTask from "../pages/dashboard/ManageTask";
 import Profile from "../pages/dashboard/Profile";
 import ErrorPage from "../pages/shared/ErrorPage";
 import TasksDetails from "../pages/TasksDetails";
+import ProtectedRoute from "../components/shared/ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
@@ -44,7 +45,11 @@ export const router = createBrowserRouter([
   // create path for Dashboard
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {

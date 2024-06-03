@@ -1,9 +1,14 @@
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import DashNavs from "../components/dashboard/DashNavs";
+import { auth } from "../../firebase.config";
+import { useAuthState } from "react-firebase-hooks/auth";
+import LoadingSpinner from "../components/shared/LoadingSpinner";
 
 const DashboardLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [user, loading] = useAuthState(auth);
+  if (loading) return <LoadingSpinner />;
 
   const handleNavigate = () => {
     // if pathname contains "editRecipe" then do 1 step back or goto home

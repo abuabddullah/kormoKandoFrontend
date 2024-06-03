@@ -44,7 +44,7 @@ const Profile = () => {
                 </svg>{" "}
               </div>{" "}
             </div>{" "}
-            <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
+            <div className="space-x-8 flex justify-center mt-32 md:mt-0 md:justify-center">
               <Link to="/dashboard/editProfile/id">
                 <button className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
                   {" "}

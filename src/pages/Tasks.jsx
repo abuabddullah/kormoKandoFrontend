@@ -1,7 +1,12 @@
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase.config";
 import TaskCard from "../components/tasks/TaskCard";
 import Pagination from "./shared/Pagination";
+import LoadingSpinner from "../components/shared/LoadingSpinner";
 
 const Tasks = () => {
+  const [user, loading] = useAuthState(auth);
+  if (loading) return <LoadingSpinner />;
   return (
     <>
       <section className="text-gray-600 body-font">

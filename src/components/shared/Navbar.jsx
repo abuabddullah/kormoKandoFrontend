@@ -3,20 +3,22 @@ import NavMenues from "./NavMenues";
 import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase.config";
 import toast from "react-hot-toast";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Navbar = () => {
-  const [user] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [signOut] = useSignOut(auth);
 
   const handleLogOut = async () => {
     const success = await signOut();
     if (success) {
-      toast.success('You are Successfully sign out!');
+      toast.success("You are Successfully sign out!");
     }
   };
 
+
   return (
-    <div className="navbar bg-base-100 sticky top-0 z-50">
+    <div className="navbar bg-base-100 sticky top-0 z-40">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

@@ -1,11 +1,71 @@
 import { LuArrowLeftToLine } from "react-icons/lu";
 import { MdDriveFileRenameOutline } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "../components/shared/SocialLogin";
+import { auth } from "../../firebase.config";
+import {
+  useAuthState,
+  useCreateUserWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const Register = () => {
-  
-  console.log("form register")
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [createUserWithEmailAndPassword] =
+    useCreateUserWithEmailAndPassword(auth);
+  const [userInfo] = useAuthState(auth);
+  const navigate = useNavigate();
+  const location = useLocation();
+  let from = location.state?.from?.pathname || "/";
+
+  useEffect(() => {
+    if (userInfo) {
+      console.log(userInfo);
+      const userData = {
+        name,
+        email: userInfo?.email,
+        photo: userInfo?.photoURL,
+      };
+      fetch("http://localhost:5000/api/v1/users", {
+        method: "POST",
+        body: JSON.stringify(userData),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          localStorage.setItem("token", data?.token);
+        });
+      toast.success("Registration Success");
+      navigate(from, { replace: true });
+    }
+  }, [userInfo, navigate, name, from]);
+
+  // complete the code for handleRegisterSubmit function
+  const handleRegisterSubmit = (e) => {
+    e.preventDefault();
+    setError(null);
+    if (password.length < 8) {
+      setError("Password should be minimum 8 characters");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Password and confirm password should be same");
+      return;
+    }
+
+    createUserWithEmailAndPassword(email, password).catch((error) => {
+      setError(error.message);
+    });
+  };
+
   return (
     <div>
       <>
@@ -31,13 +91,16 @@ const Register = () => {
             </div>
             <div className="bg-gray-100 rounded-b-lg py-12 px-4 lg:px-24">
               <h1 className="text-2xl font-bold text-center">Register now!</h1>
-              <form className="mt-6">
+              <form onSubmit={handleRegisterSubmit} className="mt-6">
                 <div className="relative">
                   <input
                     className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
                     id="name"
-                    type="text"
+                    type="name"
                     placeholder="Name"
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                   <div className="absolute left-0 inset-y-0 flex items-center">
                     <MdDriveFileRenameOutline className="h-7 w-7 ml-3 text-gray-400 p-1" />
@@ -47,8 +110,11 @@ const Register = () => {
                   <input
                     className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
                     id="email"
-                    type="text"
+                    type="email"
                     placeholder="Email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <div className="absolute left-0 inset-y-0 flex items-center">
                     <svg
@@ -67,7 +133,10 @@ const Register = () => {
                     className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
                     id="password"
                     type="password"
-                    placeholder="Password"
+                    placeholder="Password minimum 8 characters"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   <div className="absolute left-0 inset-y-0 flex items-center">
                     <svg
@@ -84,8 +153,11 @@ const Register = () => {
                   <input
                     className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
                     id="confirmPassword"
-                    type="confirmPassword"
+                    type="password"
                     placeholder="Confirm Password"
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                   <div className="absolute left-0 inset-y-0 flex items-center">
                     <svg
@@ -99,8 +171,12 @@ const Register = () => {
                   </div>
                 </div>
                 <p className="mt-4 italic text-gray-500 font-light text-xs">
-                  Password strength:{" "}
-                  <span className="font-bold text-green-400">strong</span>
+                  Notes:{" "}
+                  {error ? (
+                    <span className="text-red-500 font-bold">{error}</span>
+                  ) : (
+                    <span className="font-bold text-green-400">All Good</span>
+                  )}
                 </p>
                 <div className="mt-4 flex items-center text-gray-500">
                   <input
@@ -120,7 +196,10 @@ const Register = () => {
                   </label>
                 </div>
                 <div className="flex items-center justify-center mt-8">
-                  <button className="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+                  <button
+                    type="submit"
+                    className="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+                  >
                     Register
                   </button>
                 </div>

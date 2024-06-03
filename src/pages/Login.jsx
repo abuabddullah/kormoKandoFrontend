@@ -1,9 +1,39 @@
 import { LuArrowLeftToLine } from "react-icons/lu";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "../components/shared/SocialLogin";
+import { useEffect, useState } from "react";
+import { auth } from "../../firebase.config";
+import {
+  useAuthState,
+  useSignInWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
+import toast from "react-hot-toast";
 
 const Login = () => {
-  console.log("form login")
+  const [error, setError] = useState(null);
+  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+  const [userInfo, userLoading] = useAuthState(auth);
+  const navigate = useNavigate();
+  const location = useLocation();
+  let from = location.state?.from?.pathname || "/";
+
+  // complete the code for handleLogin function
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    signInWithEmailAndPassword(email, password).catch((error) => {
+      setError(error.message);
+    });
+  };
+
+  useEffect(() => {
+    if (userInfo) {
+      toast.success("Login Success");
+      navigate(from, { replace: true });
+    }
+  }, [userInfo, navigate, from, userLoading]);
   return (
     <>
       <div className="bg-gray-800">
@@ -26,7 +56,7 @@ const Login = () => {
           </div>
           <div className="bg-gray-100 rounded-b-lg py-12 px-4 lg:px-24">
             <h1 className="text-2xl font-bold text-center">Login now!</h1>
-            <form className="mt-6">
+            <form onSubmit={handleLogin} className="mt-6">
               <div className="relative">
                 <input
                   className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
@@ -65,8 +95,12 @@ const Login = () => {
                 </div>
               </div>
               <p className="mt-4 italic text-gray-500 font-light text-xs">
-                Password strength:{" "}
-                <span className="font-bold text-green-400">strong</span>
+                Notes:{" "}
+                {error ? (
+                  <span className="text-red-500 font-bold">{error}</span>
+                ) : (
+                  <span className="font-bold text-green-400">All Good</span>
+                )}
               </p>
               <div className="mt-4 flex items-center text-gray-500">
                 <input
@@ -83,7 +117,10 @@ const Login = () => {
                 </label>
               </div>
               <div className="flex items-center justify-center mt-8">
-                <button className="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+                <button
+                  type="submit"
+                  className="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+                >
                   Login
                 </button>
               </div>

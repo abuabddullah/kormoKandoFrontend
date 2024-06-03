@@ -1,11 +1,41 @@
-import React from "react";
-import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import React, { useEffect } from "react";
+import { useAuthState, useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { auth } from "../../../firebase.config";
+import { useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const SocialLogin = () => {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
-  console.log("form socaillogin")
+  const [userInfo, userLoading] = useAuthState(auth);
+  const navigate = useNavigate();
+  const location = useLocation();
+  let from = location.state?.from?.pathname || "/";
+
+  useEffect(() => {
+    if (userInfo) {
+      console.log(userInfo);
+      const userData = {
+        name: userInfo?.displayName,
+        email: userInfo?.email,
+        photo: userInfo?.photoURL,
+      };
+      fetch("http://localhost:5000/api/v1/users", {
+        method: "POST",
+        body: JSON.stringify(userData),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          localStorage.setItem("token", data?.token);
+        });
+      toast.success("Login Success");
+      navigate(from, { replace: true });
+    }
+  }, [userInfo, navigate, from, userLoading]);
   return (
     <div>
       <div className="flex items-center justify-center space-x-4 mt-3">
