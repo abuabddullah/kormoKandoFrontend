@@ -59,6 +59,8 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/editProfile/:id",
         element: <EditProfile />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/api/v1/users/get/${params.id}`),
       },
       {
         path: "/dashboard/addTask",

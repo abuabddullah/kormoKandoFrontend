@@ -1,6 +1,25 @@
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../../firebase.config";
 
 const Profile = () => {
+  const [user] = useAuthState(auth);
+  const { email } = user;
+  const [userData, setUserData] = useState({});
+  const navigate = useNavigate();
+
+  // get user info by using email from db by using axios get request
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const url = `http://localhost:5000/api/v1/users/${email}`;
+      const response = await axios.get(url);
+      console.log(response.data);
+      setUserData(response.data);
+    };
+    getUserInfo();
+  }, [user, email]);
   return (
     <>
       <div className="p-16">
@@ -28,35 +47,42 @@ const Profile = () => {
             </div>{" "}
             <div className="relative">
               {" "}
-              <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-24 w-24"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  {" "}
-                  <path
-                    fillRule="evenodd"
-                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clipRule="evenodd"
-                  />
-                </svg>{" "}
+              <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500 overflow-hidden">
+                {userData ? (
+                  <img className="w-full" src={userData?.photo} alt="" />
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-24 w-24"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    {" "}
+                    <path
+                      fillRule="evenodd"
+                      d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                )}{" "}
               </div>{" "}
             </div>{" "}
             <div className="space-x-8 flex justify-center mt-32 md:mt-0 md:justify-center">
-              <Link to="/dashboard/editProfile/id">
-                <button className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
-                  {" "}
-                  Edit Profile
-                </button>{" "}
-              </Link>
+              <button
+                onClick={() =>
+                  navigate(`/dashboard/editProfile/${userData._id}`)
+                }
+                className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+              >
+                {" "}
+                Edit Profile
+              </button>{" "}
             </div>{" "}
           </div>{" "}
           <div className="mt-20 text-center border-b pb-12">
             {" "}
             <h1 className="text-4xl font-medium text-gray-700">
-              Jessica Jones,{" "}
+              {userData ? userData?.name : "Anonymous"},{" "}
               <span className="font-light text-gray-500">27</span>
             </h1>{" "}
             <p className="font-light text-gray-600 mt-3">Bucharest, Romania</p>{" "}

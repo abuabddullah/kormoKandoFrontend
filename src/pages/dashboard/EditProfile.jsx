@@ -1,4 +1,51 @@
+import { useRef } from "react";
+import toast from "react-hot-toast";
+import { useLoaderData } from "react-router-dom";
+
+export const token = localStorage.getItem("token");
+
 const EditProfile = () => {
+  const userData = useLoaderData();
+  const formRef = useRef(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+
+    const name = form.name.value;
+
+    const photo = form.proPic.value;
+    const phone = form.phoneNo.value;
+
+    const userInfo4PATCH = {
+      name,
+      photo,
+      phone,
+      email: userData?.email,
+    };
+
+    fetch(`http://localhost:5000/api/v1/users/${userData?.email}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(userInfo4PATCH),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data?.modifiedCount === 1) {
+          toast.success("🦄 Profile Editing Successful!");
+          handleFormReset();
+        }
+      });
+  };
+
+  function handleFormReset() {
+    formRef.current.reset();
+  }
   return (
     <>
       <div className="p-8 rounded border border-gray-200 shadow-lg md:w-2/3 mx-auto my-8">
@@ -9,7 +56,7 @@ const EditProfile = () => {
             Your profile is your story. Keep it updated and let it shine!
           </p>{" "}
         </div>
-        <form>
+        <form ref={formRef} onSubmit={handleSubmit}>
           {" "}
           <div className="mt-8 grid grid-cols-1 gap-4">
             {" "}
@@ -24,6 +71,7 @@ const EditProfile = () => {
               <input
                 type="text"
                 name="name"
+                defaultValue={userData?.name}
                 id="name"
                 className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
                 placeholder="Enter your name"
@@ -38,7 +86,9 @@ const EditProfile = () => {
                 Email Adress
               </label>{" "}
               <input
-                type="text"
+                type="email"
+                value={userData?.email}
+                disabled
                 name="email"
                 id="email"
                 className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
@@ -86,7 +136,10 @@ const EditProfile = () => {
             >
               Edit
             </button>
-            <button className="py-2 px-4 bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50">
+            <button
+              onClick={() => handleFormReset()}
+              className="py-2 px-4 bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50"
+            >
               Cancel
             </button>{" "}
           </div>{" "}

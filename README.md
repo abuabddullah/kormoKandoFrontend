@@ -33,7 +33,7 @@
 
 ## AXIOS+ASYNC GET
 
--
+- path1:src\pages\dashboard\Profile.jsx
 -
 
 ## AXIOS+ASYNC PATCH
