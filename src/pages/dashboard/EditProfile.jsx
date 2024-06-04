@@ -38,7 +38,7 @@ const EditProfile = () => {
         console.log(data);
         if (data?.modifiedCount === 1) {
           toast.success("🦄 Profile Editing Successful!");
-          handleFormReset();
+          // handleFormReset();
         }
       });
   };

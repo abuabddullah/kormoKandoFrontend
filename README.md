@@ -9,6 +9,7 @@
 - reset password in edit password
 - pagination fixing
 - confirm popup styling
+- edit profile/task e default value নেবার কারনে update হবার পর যখন form reset হয় তখন reload এর মত করে পুরাতন Data নেয় নতুন Data নেয় না
 
 # Different CRUD
 

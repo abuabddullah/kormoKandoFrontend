@@ -3,7 +3,6 @@ import { AiFillEdit, AiOutlineDelete } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import task5 from "./../../assets/task5.jpg";
 
-
 export const token = localStorage.getItem("token");
 
 const TableRows = ({ task, tasks, setTasks }) => {
@@ -27,7 +26,7 @@ const TableRows = ({ task, tasks, setTasks }) => {
             const newTasks = tasks.filter((task) => task._id !== id);
             setTasks(newTasks);
           }
-        }); 
+        });
     } else {
       alert("Ok! no issues");
     }
@@ -85,7 +84,7 @@ const TableRows = ({ task, tasks, setTasks }) => {
           </button>
 
           <button
-            onClick={() => navigate(`/dashboard/editTask/id`)}
+            onClick={() => navigate(`/dashboard/editTask/${task._id}`)}
             className="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
           >
             <AiFillEdit />
