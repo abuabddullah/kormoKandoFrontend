@@ -31,7 +31,7 @@ const Register = () => {
         email: userInfo?.email,
         photo: userInfo?.photoURL,
       };
-      fetch("https://kormo-kando-server.vercel.app/api/v1/users", {
+      fetch("http://localhost:5000/api/v1/users", {
         method: "POST",
         body: JSON.stringify(userData),
         headers: {
@@ -63,14 +63,14 @@ const Register = () => {
 
     createUserWithEmailAndPassword(email, password)
       .then((data) => {
-        console.log("firebase signup done",data);
+        console.log("firebase signup done", data);
         const userData = {
           name,
           email: data?.user?.email,
           photo: data?.user?.photoURL,
         };
-        console.log("userData4post",userData);
-        fetch("https://kormo-kando-server.vercel.app/api/v1/users", {
+        console.log("userData4post", userData);
+        fetch("http://localhost:5000/api/v1/users", {
           method: "POST",
           body: JSON.stringify(userData),
           headers: {
@@ -79,14 +79,15 @@ const Register = () => {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log("DB post done",data);
+            console.log("DB post done", data);
             localStorage.setItem("token", data?.token);
+            toast.success("Registration Success");
+            navigate(from, { replace: true });
           });
-        toast.success("Registration Success");
-        navigate(from, { replace: true });
       })
-      .catch((error) => {
-        setError(error.message);
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
       });
   };
 

@@ -26,7 +26,30 @@ const Login = () => {
     // i want to add the token that are recieved from backend to local storage during login
     signInWithEmailAndPassword(email, password)
       .then((data) => {
-        console.log(data);
+        console.log("firebase googleLogin done", data);
+        const userData = {
+          email: data?.user?.email,
+        };
+        console.log("userData4post", userData);
+        try {
+          fetch("http://localhost:5000/api/v1/users", {
+            method: "POST",
+            body: JSON.stringify(userData),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("DB post done", data);
+              localStorage.setItem("token", data?.token);
+              toast.success("Login Success");
+              navigate(from, { replace: true });
+            });
+        } catch (err) {
+          console.log(err);
+          toast.error(err.message);
+        }
         localStorage.setItem("token", data?.token);
         toast.success("Login Success");
       })

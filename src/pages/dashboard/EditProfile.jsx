@@ -14,7 +14,7 @@ const EditProfile = () => {
     const form = e.target;
 
     const name = form.name.value;
-
+    const email = form.email.value;
     const photo = form.proPic.value;
     const phone = form.phoneNo.value;
 
@@ -22,30 +22,31 @@ const EditProfile = () => {
       name,
       photo,
       phone,
-      email: userData?.email,
+      email,
     };
 
-    fetch(`https://kormo-kando-server.vercel.app/api/v1/users/${userData?.email}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(userInfo4PATCH),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data?.modifiedCount === 1) {
-          toast.success("🦄 Profile Editing Successful!");
-          // handleFormReset();
-        }
-      });
+    try {
+      fetch(`http://localhost:5000/api/v1/users/${email}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(userInfo4PATCH),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data?.modifiedCount === 1) {
+            toast.success("🦄 Profile Editing Successful!");
+          }
+        });
+    } catch (error) {
+      console.log(error);
+      toast.error("🦄 Profile Editing Failed!");
+    }
   };
 
-  function handleFormReset() {
-    formRef.current.reset();
-  }
   return (
     <>
       <div className="p-8 rounded border border-gray-200 shadow-lg md:w-2/3 mx-auto my-8">
