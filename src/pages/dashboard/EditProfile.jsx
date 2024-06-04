@@ -25,17 +25,14 @@ const EditProfile = () => {
       email: userData?.email,
     };
 
-    fetch(
-      `http://localhost:5000/api/v1/users/${userData?.email}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(userInfo4PATCH),
-      }
-    )
+    fetch(`http://localhost:5000/api/v1/users/${userData?.email}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(userInfo4PATCH),
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
