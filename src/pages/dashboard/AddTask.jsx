@@ -1,4 +1,56 @@
+import { useRef } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../../firebase.config";
+import axios from "axios";
+import { token } from "./EditProfile";
+import toast from "react-hot-toast";
+
 const AddTask = () => {
+  const formRef = useRef(null);
+  const [user] = useAuthState(auth);
+
+  const handleCreateRecipe = async (e) => {
+    e.preventDefault();
+    const isProceed = confirm("Are you sure wanna create a new recipe?");
+    if (isProceed) {
+      const form = e.target;
+
+      // get the value from the form
+      const email = form.email.value;
+      const title = form.taskTitle.value;
+      const priority = form.taskPriority.value;
+      const dadline = form.taskDeadline.value;
+      const description = form.taskDescription.value;
+
+      const taskData = {
+        email,
+        title,
+        priority,
+        dadline,
+        description,
+      };
+      console.log(taskData);
+
+      fetch(`http://localhost:5000/api/v1/tasks`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(taskData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data?.insertedId) {
+            toast.success("🦄 Task Adding Successful!");
+            formRef.current.reset();
+          }
+        });
+    } else {
+      alert("Ok! no issues");
+    }
+  };
   return (
     <>
       <div className="p-8 rounded border border-gray-200 shadow-lg md:w-2/3 mx-auto my-8">
@@ -9,7 +61,7 @@ const AddTask = () => {
             Add tasks to achieve goals, one step at a time.
           </p>{" "}
         </div>
-        <form>
+        <form ref={formRef} onSubmit={handleCreateRecipe}>
           {" "}
           <div className="mt-8 grid grid-cols-1 gap-4">
             {" "}
@@ -25,6 +77,8 @@ const AddTask = () => {
                 type="text"
                 name="email"
                 id="email"
+                defaultValue={user.email}
+                disabled
                 className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
                 placeholder="yourmail@provider.com"
               />{" "}
@@ -55,6 +109,7 @@ const AddTask = () => {
               </label>{" "}
               <select
                 id="taskPriority"
+                name="taskPriority"
                 className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
               >
                 <option className=" hidden">Select Category</option>
@@ -102,9 +157,6 @@ const AddTask = () => {
             >
               Add
             </button>
-            <button className="py-2 px-4 bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50">
-              Cancel
-            </button>{" "}
           </div>{" "}
         </form>{" "}
       </div>
