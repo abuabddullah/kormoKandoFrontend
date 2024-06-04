@@ -16,6 +16,7 @@ import Profile from "../pages/dashboard/Profile";
 import ErrorPage from "../pages/shared/ErrorPage";
 import TasksDetails from "../pages/TasksDetails";
 import ProtectedRoute from "../components/shared/ProtectedRoute";
+import EditPassword from "../pages/dashboard/EditPassword";
 
 export const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ export const router = createBrowserRouter([
         element: <EditProfile />,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/api/v1/users/get/${params.id}`),
+      },
+      {
+        path: "/dashboard/editPassword",
+        element: <EditPassword />,
       },
       {
         path: "/dashboard/addTask",

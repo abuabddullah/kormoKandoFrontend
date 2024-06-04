@@ -3,6 +3,10 @@
 - fb login pending
 - process in not working while env is importing
 - use axios everywhere for CRUD
+- worng email error showing
+- multile toast during registration at a time
+- same email একবার DB তে সেভ হয়ে গেলে আরকোন account ই যাতে না হয়
+- reset password in edit password
 
 # Different CRUD
 

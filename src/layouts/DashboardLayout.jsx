@@ -18,6 +18,9 @@ const DashboardLayout = () => {
     } else if (location.pathname.includes("editTask")) {
       // Option 1: Go back one step
       navigate(-1);
+    } else if (location.pathname.includes("editPassword")) {
+      // Option 1: Go back one step
+      navigate(-1);
     } else {
       navigate("/");
     }
