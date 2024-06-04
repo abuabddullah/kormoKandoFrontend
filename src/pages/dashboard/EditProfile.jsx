@@ -25,14 +25,17 @@ const EditProfile = () => {
       email: userData?.email,
     };
 
-    fetch(`https://kormo-kando-server.vercel.app/api/v1/users/${userData?.email}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(userInfo4PATCH),
-    })
+    fetch(
+      `https://kormo-kando-server.vercel.app/api/v1/users/${userData?.email}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(userInfo4PATCH),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -138,12 +141,6 @@ const EditProfile = () => {
             >
               Edit
             </button>
-            <button
-              onClick={() => handleFormReset()}
-              className="py-2 px-4 bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50"
-            >
-              Cancel
-            </button>{" "}
           </div>{" "}
         </form>{" "}
       </div>

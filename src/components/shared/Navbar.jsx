@@ -13,9 +13,10 @@ const Navbar = () => {
     const success = await signOut();
     if (success) {
       toast.success("You are Successfully sign out!");
+      // and remove token from the local storage
+      localStorage.removeItem("token");
     }
   };
-
 
   return (
     <div className="navbar bg-base-100 sticky top-0 z-40">
