@@ -1,6 +1,6 @@
 import {
-  useSignInWithFacebook,
-  useSignInWithGoogle,
+    useSignInWithFacebook,
+    useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
@@ -22,7 +22,7 @@ const SocialLogin = () => {
         email: userInfo?.email,
         photo: userInfo?.photoURL,
       };
-      fetch("https://kormo-kando-server.vercel.app/api/v1/users", {
+      fetch("https://kormokandoserver.onrender.com/api/v1/users", {
         method: "POST",
         body: JSON.stringify(userData),
         headers: {
@@ -51,7 +51,7 @@ const SocialLogin = () => {
           photo: data.user?.photoURL,
         };
         console.log("userData4post", userData);
-        fetch("https://kormo-kando-server.vercel.app/api/v1/users", {
+        fetch("https://kormokandoserver.onrender.com/api/v1/users", {
           method: "POST",
           body: JSON.stringify(userData),
           headers: {
@@ -83,7 +83,7 @@ const SocialLogin = () => {
             photo: data.user?.photoURL,
           };
           console.log("userData4post", userData);
-          fetch("https://kormo-kando-server.vercel.app/api/v1/users", {
+          fetch("https://kormokandoserver.onrender.com/api/v1/users", {
             method: "POST",
             body: JSON.stringify(userData),
             headers: {

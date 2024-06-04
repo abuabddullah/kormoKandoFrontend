@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {
-  useAuthState,
-  useSignInWithEmailAndPassword,
+    useAuthState,
+    useSignInWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { LuArrowLeftToLine } from "react-icons/lu";
@@ -32,7 +32,7 @@ const Login = () => {
         };
         console.log("userData4post", userData);
         try {
-          fetch("https://kormo-kando-server.vercel.app/api/v1/users", {
+          fetch("https://kormokandoserver.onrender.com/api/v1/users", {
             method: "POST",
             body: JSON.stringify(userData),
             headers: {

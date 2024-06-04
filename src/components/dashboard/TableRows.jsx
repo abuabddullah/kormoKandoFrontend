@@ -12,7 +12,7 @@ const TableRows = ({ task, tasks, setTasks }) => {
     const isProceed = confirm("Are you sure you want to delete this task?");
     if (isProceed) {
       console.log(token);
-      fetch(`https://kormo-kando-server.vercel.app/api/v1/tasks/${id}`, {
+      fetch(`https://kormokandoserver.onrender.com/api/v1/tasks/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

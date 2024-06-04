@@ -10,7 +10,7 @@ const EditTask = () => {
 
   // get task by id in useEffect
   useEffect(() => {
-    fetch(`https://kormo-kando-server.vercel.app/api/v1/tasks/${id}`)
+    fetch(`https://kormokandoserver.onrender.com/api/v1/tasks/${id}`)
       .then((response) => response.json())
       .then((data) => setTaskDetails(data));
   }, [id]);
@@ -34,7 +34,7 @@ const EditTask = () => {
       };
       // fetch the task by id
       const res4EditTask = await fetch(
-        `https://kormo-kando-server.vercel.app/api/v1/tasks/${id}`,
+        `https://kormokandoserver.onrender.com/api/v1/tasks/${id}`,
         {
           method: "PATCH",
           headers: {

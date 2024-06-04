@@ -14,7 +14,7 @@ const Tasks = () => {
 
   useEffect(() => {
     // Fetch tasks from the API
-    fetch("https://kormo-kando-server.vercel.app/api/v1/tasks")
+    fetch("https://kormokandoserver.onrender.com/api/v1/tasks")
       .then((res) => res.json())
       .then((data) => {
         setTasks(data);

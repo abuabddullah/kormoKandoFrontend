@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
-  useAuthState,
-  useCreateUserWithEmailAndPassword,
+    useAuthState,
+    useCreateUserWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { LuArrowLeftToLine } from "react-icons/lu";
@@ -31,7 +31,7 @@ const Register = () => {
         email: userInfo?.email,
         photo: userInfo?.photoURL,
       };
-      fetch("https://kormo-kando-server.vercel.app/api/v1/users", {
+      fetch("https://kormokandoserver.onrender.com/api/v1/users", {
         method: "POST",
         body: JSON.stringify(userData),
         headers: {
@@ -70,7 +70,7 @@ const Register = () => {
           photo: data?.user?.photoURL,
         };
         console.log("userData4post", userData);
-        fetch("https://kormo-kando-server.vercel.app/api/v1/users", {
+        fetch("https://kormokandoserver.onrender.com/api/v1/users", {
           method: "POST",
           body: JSON.stringify(userData),
           headers: {

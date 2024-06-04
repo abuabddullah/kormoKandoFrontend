@@ -29,7 +29,7 @@ const AddTask = () => {
         description,
       };
 
-      fetch(`https://kormo-kando-server.vercel.app/api/v1/tasks`, {
+      fetch(`https://kormokandoserver.onrender.com/api/v1/tasks`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
