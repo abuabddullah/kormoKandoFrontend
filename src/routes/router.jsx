@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
         path: "/taskDetails/:id",
         element: <TasksDetails />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/v1/tasks/${params.id}`),
+          fetch(`https://kormo-kando-server.vercel.app/api/v1/tasks/${params.id}`),
       },
       { path: "/contact", element: <Contact /> },
       { path: "/features", element: <Features /> },
@@ -66,7 +66,7 @@ export const router = createBrowserRouter([
         path: "/dashboard/editProfile/:id",
         element: <EditProfile />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/v1/users/get/${params.id}`),
+          fetch(`https://kormo-kando-server.vercel.app/api/v1/users/get/${params.id}`),
       },
       {
         path: "/dashboard/editPassword",

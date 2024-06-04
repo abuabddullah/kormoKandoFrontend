@@ -7,7 +7,7 @@ const ManageTask = () => {
 
   useEffect(() => {
     // Fetch tasks from the API
-    fetch("http://localhost:5000/api/v1/tasks")
+    fetch("https://kormo-kando-server.vercel.app/api/v1/tasks")
       .then((res) => res.json())
       .then((data) => {
         setTasks(data);

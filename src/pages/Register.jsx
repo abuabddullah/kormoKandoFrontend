@@ -31,7 +31,7 @@ const Register = () => {
         email: userInfo?.email,
         photo: userInfo?.photoURL,
       };
-      fetch("http://localhost:5000/api/v1/users", {
+      fetch("https://kormo-kando-server.vercel.app/api/v1/users", {
         method: "POST",
         body: JSON.stringify(userData),
         headers: {
@@ -70,7 +70,7 @@ const Register = () => {
           photo: data?.user?.photoURL,
         };
         console.log("userData4post", userData);
-        fetch("http://localhost:5000/api/v1/users", {
+        fetch("https://kormo-kando-server.vercel.app/api/v1/users", {
           method: "POST",
           body: JSON.stringify(userData),
           headers: {

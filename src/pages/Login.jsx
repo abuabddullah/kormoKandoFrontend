@@ -1,13 +1,13 @@
-import { LuArrowLeftToLine } from "react-icons/lu";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import SocialLogin from "../components/shared/SocialLogin";
 import { useEffect, useState } from "react";
-import { auth } from "../../firebase.config";
 import {
   useAuthState,
   useSignInWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
+import { LuArrowLeftToLine } from "react-icons/lu";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { auth } from "../../firebase.config";
+import SocialLogin from "../components/shared/SocialLogin";
 
 const Login = () => {
   const [error, setError] = useState(null);
@@ -32,7 +32,7 @@ const Login = () => {
         };
         console.log("userData4post", userData);
         try {
-          fetch("http://localhost:5000/api/v1/users", {
+          fetch("https://kormo-kando-server.vercel.app/api/v1/users", {
             method: "POST",
             body: JSON.stringify(userData),
             headers: {
