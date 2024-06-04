@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useAuthState, useSignInWithGoogle } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
@@ -20,7 +20,7 @@ const SocialLogin = () => {
         email: userInfo?.email,
         photo: userInfo?.photoURL,
       };
-      fetch("http://localhost:5000/api/v1/users", {
+      fetch("https://kormo-kando-server.vercel.app/api/v1/users", {
         method: "POST",
         body: JSON.stringify(userData),
         headers: {
@@ -48,7 +48,7 @@ const SocialLogin = () => {
           photo: data.user?.photoURL,
         };
         console.log("userData4post", userData);
-        fetch("http://localhost:5000/api/v1/users", {
+        fetch("https://kormo-kando-server.vercel.app/api/v1/users", {
           method: "POST",
           body: JSON.stringify(userData),
           headers: {

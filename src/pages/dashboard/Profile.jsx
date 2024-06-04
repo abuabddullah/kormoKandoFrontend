@@ -13,7 +13,7 @@ const Profile = () => {
   // get user info by using email from db by using axios get request
   useEffect(() => {
     const getUserInfo = async () => {
-      const url = `http://localhost:5000/api/v1/users/${email}`;
+      const url = `https://kormo-kando-server.vercel.app/api/v1/users/${email}`;
       const response = await axios.get(url);
       console.log(response.data);
       setUserData(response.data);
