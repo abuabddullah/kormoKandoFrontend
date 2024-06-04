@@ -105,7 +105,7 @@ const EditTask = () => {
                 className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
               >
                 <option className=" hidden">Select Category</option>
-                <option>Normal</option>
+                <option selected>Normal</option>
                 <option>Moderate</option>
                 <option>High</option>
               </select>

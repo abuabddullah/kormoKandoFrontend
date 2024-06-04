@@ -1,10 +1,11 @@
 import React, { Fragment, useState } from "react";
 import { auth } from "../../../firebase.config";
-import { useUpdatePassword } from "react-firebase-hooks/auth";
+import { useAuthState, useUpdatePassword } from "react-firebase-hooks/auth";
 import LoadingSpinner from "../../components/shared/LoadingSpinner";
 import toast from "react-hot-toast";
 
 const EditPassword = () => {
+  const [userData] = useAuthState(auth);
   const [password, setPassword] = useState("");
   const [updatePassword, updating, error] = useUpdatePassword(auth);
   const handleUpdatePassword = async () => {
@@ -38,10 +39,28 @@ const EditPassword = () => {
                 <div>
                   {" "}
                   <label
+                    htmlFor="email"
+                    className="text-sm text-gray-700 block mb-1 font-medium"
+                  >
+                    Email Adress
+                  </label>{" "}
+                  <input
+                    type="email"
+                    value={userData?.email}
+                    disabled
+                    name="email"
+                    id="email"
+                    className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
+                    placeholder="yourmail@provider.com"
+                  />{" "}
+                </div>{" "}
+                <div>
+                  {" "}
+                  <label
                     htmlFor="password"
                     className="text-sm text-gray-700 block mb-1 font-medium"
                   >
-                    Name
+                    New Password
                   </label>{" "}
                   <input
                     type="password"
@@ -54,7 +73,12 @@ const EditPassword = () => {
                   />{" "}
                 </div>{" "}
               </div>{" "}
-              <p className="text-sm text-gray-500 mt-2">Forgot Password? <span className="text-info cursor-pointer underline">Reset Password</span></p>
+              <p className="text-sm text-gray-500 mt-2">
+                Forgot Password?{" "}
+                <span className="text-info cursor-pointer underline">
+                  Reset Password
+                </span>
+              </p>
               <div className="space-x-4 mt-8">
                 {" "}
                 <button

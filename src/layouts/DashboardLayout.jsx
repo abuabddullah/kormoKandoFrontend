@@ -1,7 +1,7 @@
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import DashNavs from "../components/dashboard/DashNavs";
-import { auth } from "../../firebase.config";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { auth } from "../../firebase.config";
+import DashNavs from "../components/dashboard/DashNavs";
 import LoadingSpinner from "../components/shared/LoadingSpinner";
 
 const DashboardLayout = () => {
@@ -25,6 +25,9 @@ const DashboardLayout = () => {
       navigate("/");
     }
   };
+
+  if (loading) return <LoadingSpinner />;
+
   return (
     <>
       <div className="drawer">
