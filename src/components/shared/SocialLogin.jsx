@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useAuthState, useSignInWithGoogle } from "react-firebase-hooks/auth";
-import { FaFacebook, FaGoogle } from "react-icons/fa";
-import { auth } from "../../../firebase.config";
-import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { FaFacebook, FaGoogle } from "react-icons/fa";
+import { useLocation, useNavigate } from "react-router-dom";
+import { auth } from "../../../firebase.config";
 
 const SocialLogin = () => {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
@@ -20,7 +20,7 @@ const SocialLogin = () => {
         email: userInfo?.email,
         photo: userInfo?.photoURL,
       };
-      fetch("http://localhost:5000/api/v1/users", {
+      fetch("https://kormo-kando-server.vercel.app/api/v1/users", {
         method: "POST",
         body: JSON.stringify(userData),
         headers: {

@@ -1,9 +1,8 @@
 import { useRef } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../../firebase.config";
-import axios from "axios";
-import { token } from "./EditProfile";
 import toast from "react-hot-toast";
+import { auth } from "../../../firebase.config";
+import { token } from "./EditProfile";
 
 const AddTask = () => {
   const formRef = useRef(null);
@@ -30,7 +29,7 @@ const AddTask = () => {
         description,
       };
 
-      fetch(`http://localhost:5000/api/v1/tasks`, {
+      fetch(`https://kormo-kando-server.vercel.app/api/v1/tasks`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { token } from "./EditProfile";
-import toast from "react-hot-toast";
 
 const EditTask = () => {
   const { id } = useParams();
@@ -10,7 +10,7 @@ const EditTask = () => {
 
   // get task by id in useEffect
   useEffect(() => {
-    fetch(`http://localhost:5000/api/v1/tasks/${id}`)
+    fetch(`https://kormo-kando-server.vercel.app/api/v1/tasks/${id}`)
       .then((response) => response.json())
       .then((data) => setTaskDetails(data));
   }, [id]);
@@ -34,7 +34,7 @@ const EditTask = () => {
       };
       // fetch the task by id
       const res4EditTask = await fetch(
-        `http://localhost:5000/api/v1/tasks/${id}`,
+        `https://kormo-kando-server.vercel.app/api/v1/tasks/${id}`,
         {
           method: "PATCH",
           headers: {
@@ -105,9 +105,9 @@ const EditTask = () => {
                 className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
               >
                 <option className=" hidden">Select Category</option>
-                <option selected>Normal</option>
-                <option>Moderate</option>
-                <option>High</option>
+                <option selected>High</option>
+                <option>Normal</option>
+                <option>Low</option>
               </select>
             </div>{" "}
             <div>

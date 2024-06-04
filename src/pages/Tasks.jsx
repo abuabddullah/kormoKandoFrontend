@@ -1,9 +1,9 @@
+import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase.config";
+import LoadingSpinner from "../components/shared/LoadingSpinner";
 import TaskCard from "../components/tasks/TaskCard";
 import Pagination from "./shared/Pagination";
-import LoadingSpinner from "../components/shared/LoadingSpinner";
-import { useEffect, useState } from "react";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -14,7 +14,7 @@ const Tasks = () => {
 
   useEffect(() => {
     // Fetch tasks from the API
-    fetch("http://localhost:5000/api/v1/tasks")
+    fetch("https://kormo-kando-server.vercel.app/api/v1/tasks")
       .then((res) => res.json())
       .then((data) => {
         setTasks(data);

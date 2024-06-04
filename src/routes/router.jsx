@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import ProtectedRoute from "../components/shared/ProtectedRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MainLayout from "../layouts/MainLayout";
 import About from "../pages/About";
@@ -8,15 +9,14 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Tasks from "../pages/Tasks";
+import TasksDetails from "../pages/TasksDetails";
 import AddTask from "../pages/dashboard/AddTask";
+import EditPassword from "../pages/dashboard/EditPassword";
 import EditProfile from "../pages/dashboard/EditProfile";
 import EditTask from "../pages/dashboard/EditTask";
 import ManageTask from "../pages/dashboard/ManageTask";
 import Profile from "../pages/dashboard/Profile";
 import ErrorPage from "../pages/shared/ErrorPage";
-import TasksDetails from "../pages/TasksDetails";
-import ProtectedRoute from "../components/shared/ProtectedRoute";
-import EditPassword from "../pages/dashboard/EditPassword";
 
 export const router = createBrowserRouter([
   {
@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
         path: "/taskDetails/:id",
         element: <TasksDetails />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/v1/tasks/${params.id}`),
+          fetch(`https://kormo-kando-server.vercel.app/api/v1/tasks/${params.id}`),
       },
       { path: "/contact", element: <Contact /> },
       { path: "/features", element: <Features /> },
@@ -66,7 +66,7 @@ export const router = createBrowserRouter([
         path: "/dashboard/editProfile/:id",
         element: <EditProfile />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/v1/users/get/${params.id}`),
+          fetch(`https://kormo-kando-server.vercel.app/api/v1/users/get/${params.id}`),
       },
       {
         path: "/dashboard/editPassword",

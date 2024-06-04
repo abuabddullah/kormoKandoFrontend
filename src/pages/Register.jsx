@@ -1,14 +1,14 @@
+import { useEffect, useState } from "react";
+import {
+    useAuthState,
+    useCreateUserWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
+import toast from "react-hot-toast";
 import { LuArrowLeftToLine } from "react-icons/lu";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import SocialLogin from "../components/shared/SocialLogin";
 import { auth } from "../../firebase.config";
-import {
-  useAuthState,
-  useCreateUserWithEmailAndPassword,
-} from "react-firebase-hooks/auth";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import SocialLogin from "../components/shared/SocialLogin";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -31,7 +31,7 @@ const Register = () => {
         email: userInfo?.email,
         photo: userInfo?.photoURL,
       };
-      fetch("http://localhost:5000/api/v1/users", {
+      fetch("https://kormo-kando-server.vercel.app/api/v1/users", {
         method: "POST",
         body: JSON.stringify(userData),
         headers: {
