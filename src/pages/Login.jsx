@@ -23,9 +23,17 @@ const Login = () => {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    signInWithEmailAndPassword(email, password).catch((error) => {
-      setError(error.message);
-    });
+    // i want to add the token that are recieved from backend to local storage during login
+    signInWithEmailAndPassword(email, password)
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem("token", data?.token);
+        toast.success("Login Success");
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(err.message);
+      });
   };
 
   useEffect(() => {
