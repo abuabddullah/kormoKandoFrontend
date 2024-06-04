@@ -19,14 +19,14 @@ const AddTask = () => {
       const email = form.email.value;
       const title = form.taskTitle.value;
       const priority = form.taskPriority.value;
-      const dadline = form.taskDeadline.value;
+      const deadline = form.taskDeadline.value;
       const description = form.taskDescription.value;
 
       const taskData = {
         email,
         title,
         priority,
-        dadline,
+        deadline,
         description,
       };
       console.log(taskData);

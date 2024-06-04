@@ -3,9 +3,19 @@ import { auth } from "../../firebase.config";
 import TaskCard from "../components/tasks/TaskCard";
 import Pagination from "./shared/Pagination";
 import LoadingSpinner from "../components/shared/LoadingSpinner";
+import { useEffect, useState } from "react";
 
 const Tasks = () => {
+  const [tasks, setTasks] = useState([]);
   const [user, loading] = useAuthState(auth);
+
+  useEffect(() => {
+    // fetching-1: inside useEffect by fetch.then.then
+    fetch("http://localhost:5000/api/v1/tasks")
+      .then((res) => res.json())
+      .then((data) => setTasks(data));
+  }, []);
+
   if (loading) return <LoadingSpinner />;
   return (
     <>
@@ -20,10 +30,11 @@ const Tasks = () => {
         </div>
         <div className="container px-5 py-12 mx-auto">
           <div className="flex flex-wrap gap-5 -m-4 justify-center">
-            {[...Array(9).keys()].map((item, index) => {
+            {/* {[...Array(9).keys()].map((item, index) => { */}
+            {tasks.map((task, index) => {
               return (
                 <>
-                  <TaskCard />
+                  <TaskCard task={task} key={index} />
                 </>
               );
             })}

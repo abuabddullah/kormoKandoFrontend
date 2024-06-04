@@ -28,7 +28,12 @@ export const router = createBrowserRouter([
       { path: "/home", element: <Home /> },
       { path: "/about", element: <About /> },
       { path: "/tasks", element: <Tasks /> },
-      { path: "/taskDetails/:id", element: <TasksDetails /> },
+      {
+        path: "/taskDetails/:id",
+        element: <TasksDetails />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/api/v1/tasks/${params.id}`),
+      },
       { path: "/contact", element: <Contact /> },
       { path: "/features", element: <Features /> },
     ],

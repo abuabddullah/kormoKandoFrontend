@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import task5 from "./../assets/task5.jpg";
+import { useLoaderData } from "react-router-dom";
+import CountdownTimer from "../components/tasksDetails/CountdownTimer";
 
 const TasksDetails = () => {
+  const [leftTime, setLeftTime] = useState(0);
+  const task = useLoaderData();
+
   return (
     <>
       <section className="text-gray-600 body-font">
@@ -8,25 +14,24 @@ const TasksDetails = () => {
           <img
             className="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded"
             alt="hero"
-            src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=320&q=80"
+            src={task5}
           />
           <div className="text-center lg:w-2/3 w-full">
             <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
-              "Task Title"
+              {task?.title}
             </h1>
-            <p className="mb-8 leading-relaxed">
-              "TASK DESCRIPTION_Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Modi quos quidem sequi illum facere recusandae
-              voluptatibus"
-            </p>
+            <p className="mb-8 leading-relaxed">{task?.description}</p>
             <div className="grid grid-rows-2 justify-items-center pb-6">
-            <div className="badge badge-accent badge-outline mb-8">
-              "Top" Prior
-            </div>
-            <div className="btn">
-              Deadline
-              <div className="badge badge-warning">"01/05/2024"</div>
-            </div>
+              <div className="badge badge-accent badge-outline mb-8">
+                Priority: {task?.priority}{" "}
+              </div>
+              <div className="btn">
+                Deadline
+                <div className="badge badge-warning">{task?.deadline}</div>
+              </div>
+              <div>
+                <CountdownTimer deadline={task?.deadline} />
+              </div>
             </div>
             <div className="flex justify-center">
               <button className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
