@@ -1,17 +1,29 @@
+import { useEffect, useState } from "react";
 import TableRows from "../../components/dashboard/TableRows";
 import Pagination from "../shared/Pagination";
 
 const ManageTask = () => {
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    // Fetch tasks from the API
+    fetch("http://localhost:5000/api/v1/tasks")
+      .then((res) => res.json())
+      .then((data) => {
+        setTasks(data);
+      });
+  }, []);
+
   return (
     <>
       <section className="container px-4 mx-auto">
-        <div className="flex items-center gap-x-3">
+        <div className="flex items-center gap-x-3 pt-6">
           <h2 className="text-lg font-medium text-gray-800 dark:text-white">
             Total Tasks
           </h2>
 
           <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">
-            "100" tasks
+            {tasks?.length} tasks
           </span>
         </div>
 
@@ -110,10 +122,10 @@ const ManageTask = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                    {[...Array(9).keys()].map((item, index) => {
+                    {tasks?.map((task, index) => {
                       return (
                         <>
-                          <TableRows />
+                          <TableRows setTasks={setTasks} tasks={tasks} task={task} />
                         </>
                       );
                     })}

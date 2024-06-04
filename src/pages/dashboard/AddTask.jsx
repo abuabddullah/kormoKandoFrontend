@@ -29,7 +29,6 @@ const AddTask = () => {
         deadline,
         description,
       };
-      console.log(taskData);
 
       fetch(`http://localhost:5000/api/v1/tasks`, {
         method: "POST",

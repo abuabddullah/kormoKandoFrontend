@@ -5,7 +5,6 @@ import taskImg5 from "./../../assets/task5.jpg";
 
 const TaskCard = ({ task }) => {
   const navigate = useNavigate();
-  console.log(task);
   return (
     <>
       <div className="max-w-xs overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">

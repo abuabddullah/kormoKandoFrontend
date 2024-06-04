@@ -7,6 +7,8 @@
 - multile toast during registration at a time
 - same email একবার DB তে সেভ হয়ে গেলে আরকোন account ই যাতে না হয়
 - reset password in edit password
+- pagination fixing
+- confirm popup styling
 
 # Different CRUD
 
