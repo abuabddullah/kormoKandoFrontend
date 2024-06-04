@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
-    useAuthState,
-    useCreateUserWithEmailAndPassword,
+  useAuthState,
+  useCreateUserWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { LuArrowLeftToLine } from "react-icons/lu";
@@ -23,7 +23,7 @@ const Register = () => {
   const location = useLocation();
   let from = location.state?.from?.pathname || "/";
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (userInfo) {
       console.log(userInfo);
       const userData = {
@@ -31,7 +31,7 @@ const Register = () => {
         email: userInfo?.email,
         photo: userInfo?.photoURL,
       };
-      fetch("https://kormo-kando-server.vercel.app/api/v1/users", {
+      fetch("http://localhost:5000/api/v1/users", {
         method: "POST",
         body: JSON.stringify(userData),
         headers: {
@@ -46,7 +46,7 @@ const Register = () => {
       toast.success("Registration Success");
       navigate(from, { replace: true });
     }
-  }, [userInfo, navigate, name, from]);
+  }, [userInfo, navigate, name, from]); */
 
   // complete the code for handleRegisterSubmit function
   const handleRegisterSubmit = (e) => {
@@ -61,9 +61,33 @@ const Register = () => {
       return;
     }
 
-    createUserWithEmailAndPassword(email, password).catch((error) => {
-      setError(error.message);
-    });
+    createUserWithEmailAndPassword(email, password)
+      .then((data) => {
+        console.log("firebase signup done",data);
+        const userData = {
+          name,
+          email: data?.user?.email,
+          photo: data?.user?.photoURL,
+        };
+        console.log("userData4post",userData);
+        fetch("http://localhost:5000/api/v1/users", {
+          method: "POST",
+          body: JSON.stringify(userData),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("DB post done",data);
+            localStorage.setItem("token", data?.token);
+          });
+        toast.success("Registration Success");
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
   };
 
   return (

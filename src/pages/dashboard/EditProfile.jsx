@@ -26,7 +26,7 @@ const EditProfile = () => {
     };
 
     fetch(
-      `https://kormo-kando-server.vercel.app/api/v1/users/${userData?.email}`,
+      `http://localhost:5000/api/v1/users/${userData?.email}`,
       {
         method: "PATCH",
         headers: {
