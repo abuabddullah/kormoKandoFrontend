@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import TableRows from "../../components/dashboard/TableRows";
 import Pagination from "../shared/Pagination";
+import loadingImg from "./../../assets/dataloading.gif";
 
 const ManageTask = () => {
   const [tasks, setTasks] = useState([]);
@@ -122,13 +123,25 @@ const ManageTask = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                    {tasks?.map((task, index) => {
-                      return (
-                        <>
-                          <TableRows setTasks={setTasks} tasks={tasks} task={task} />
-                        </>
-                      );
-                    })}
+                    {
+                      // if no task show loadingImg with full page else show tasks
+                      tasks.length === 0 ? (
+                        <img
+                          src={loadingImg}
+                          alt="loading"
+                          className="w-1/2 h-1/2 mx-auto"
+                        />
+                      ) : (
+                        tasks?.map((task) => (
+                          <TableRows
+                            key={task._id}
+                            task={task}
+                            setTasks={setTasks}
+                            tasks={tasks}
+                          />
+                        ))
+                      )
+                    }
                   </tbody>
                 </table>
               </div>

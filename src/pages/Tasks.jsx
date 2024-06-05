@@ -4,6 +4,7 @@ import { auth } from "../../firebase.config";
 import LoadingSpinner from "../components/shared/LoadingSpinner";
 import TaskCard from "../components/tasks/TaskCard";
 import Pagination from "./shared/Pagination";
+import loadingImg from "./../assets/dataloading.gif";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -63,9 +64,20 @@ const Tasks = () => {
         </div>
         <div className="container px-5 py-12 mx-auto">
           <div className="flex flex-wrap gap-5 -m-4 justify-center">
-            {filteredTasks.map((task, index) => (
-              <TaskCard task={task} key={index} />
-            ))}
+            {
+              // if no task show loadingImg with full page else show tasks
+              filteredTasks.length === 0 ? (
+                <img
+                  src={loadingImg}
+                  alt="loading"
+                  className="w-1/2 h-1/2 mx-auto"
+                />
+              ) : (
+                filteredTasks.map((task) => (
+                  <TaskCard key={task._id} task={task} />
+                ))
+              )
+            }
           </div>
         </div>
 
