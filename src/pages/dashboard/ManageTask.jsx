@@ -5,6 +5,7 @@ import loadingImg from "./../../assets/dataloading.gif";
 
 const ManageTask = () => {
   const [tasks, setTasks] = useState([]);
+  const [dataFetchLoading, setDataFetchLoading] = useState(true);
 
   useEffect(() => {
     // Fetch tasks from the API
@@ -12,6 +13,7 @@ const ManageTask = () => {
       .then((res) => res.json())
       .then((data) => {
         setTasks(data);
+        setDataFetchLoading(false);
       });
   }, []);
 
@@ -125,7 +127,7 @@ const ManageTask = () => {
                   <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                     {
                       // if no task show loadingImg with full page else show tasks
-                      tasks.length === 0 ? (
+                      setDataFetchLoading == true ? (
                         <img
                           src={loadingImg}
                           alt="loading"
