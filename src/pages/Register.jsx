@@ -57,14 +57,12 @@ const Register = () => {
             localStorage.setItem("token", data?.token);
             toast.success("Registration Success");
             navigate(from, { replace: true });
+            window.location.reload();
           });
       })
       .catch((err) => {
         console.log(err);
         toast.error(err.message);
-      })
-      .finally(() => {
-        window.location.reload();
       });
   };
 

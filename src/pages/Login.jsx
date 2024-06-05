@@ -45,12 +45,11 @@ const Login = () => {
               localStorage.setItem("token", data?.token);
               toast.success("Login Success");
               navigate(from, { replace: true });
+              window.location.reload();
             });
         } catch (err) {
           console.log(err);
           toast.error(err.message);
-        } finally {
-          window.location.reload();
         }
       })
       .catch((err) => {
