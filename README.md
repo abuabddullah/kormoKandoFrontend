@@ -33,17 +33,16 @@
 
 # BUGS & pendings
 
-- fb login pending
 - process in not working while env is importing
 - use axios everywhere for CRUD
-- worng email error showing
+- fire base errors showing
 - multile toast during registration at a time
 - same email একবার DB তে সেভ হয়ে গেলে আরকোন account ই যাতে না হয়
 - reset password in edit password
 - pagination fixing
 - confirm popup styling
 - edit profile/task e default value নেবার কারনে update হবার পর যখন form reset হয় তখন reload এর মত করে পুরাতন Data নেয় নতুন Data নেয় না
-- i have to force reload after each first login/register/signby google/fb it has to be off
+- i forced reload after each first login/register/signby google/fb it has to be off
 
 # DEVELOPING SCOPES
 
