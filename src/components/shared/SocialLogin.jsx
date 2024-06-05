@@ -64,6 +64,7 @@ const SocialLogin = () => {
             localStorage.setItem("token", data?.token);
             toast.success("Login Success");
             navigate(from, { replace: true });
+            window.location.reload();
           });
       })
       .catch((err) => {
