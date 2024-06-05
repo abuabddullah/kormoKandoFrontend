@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
-  useAuthState,
-  useCreateUserWithEmailAndPassword,
+  useCreateUserWithEmailAndPassword
 } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { LuArrowLeftToLine } from "react-icons/lu";

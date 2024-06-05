@@ -3,8 +3,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase.config";
 import LoadingSpinner from "../components/shared/LoadingSpinner";
 import TaskCard from "../components/tasks/TaskCard";
-import Pagination from "./shared/Pagination";
 import loadingImg from "./../assets/dataloading.gif";
+import Pagination from "./shared/Pagination";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);

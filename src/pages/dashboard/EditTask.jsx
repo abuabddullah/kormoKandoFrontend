@@ -48,16 +48,11 @@ const EditTask = () => {
       console.log(data);
       if (data?.modifiedCount === 1) {
         toast.success("Task Edited Successfully!!");
-        // handleFormReset();
       }
     } else {
       alert("Ok! no issues");
     }
   };
-
-  function handleFormReset() {
-    formRef.current.reset();
-  }
 
   return (
     <>
