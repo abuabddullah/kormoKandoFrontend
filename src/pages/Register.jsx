@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
-    useAuthState,
-    useCreateUserWithEmailAndPassword,
+  useAuthState,
+  useCreateUserWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { LuArrowLeftToLine } from "react-icons/lu";
@@ -18,35 +18,9 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
-  const [userInfo] = useAuthState(auth);
   const navigate = useNavigate();
   const location = useLocation();
   let from = location.state?.from?.pathname || "/";
-
-  /* useEffect(() => {
-    if (userInfo) {
-      console.log(userInfo);
-      const userData = {
-        name,
-        email: userInfo?.email,
-        photo: userInfo?.photoURL,
-      };
-      fetch("https://kormokandoserver.onrender.com/api/v1/users", {
-        method: "POST",
-        body: JSON.stringify(userData),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          localStorage.setItem("token", data?.token);
-        });
-      toast.success("Registration Success");
-      navigate(from, { replace: true });
-    }
-  }, [userInfo, navigate, name, from]); */
 
   // complete the code for handleRegisterSubmit function
   const handleRegisterSubmit = (e) => {
@@ -88,6 +62,9 @@ const Register = () => {
       .catch((err) => {
         console.log(err);
         toast.error(err.message);
+      })
+      .finally(() => {
+        window.location.reload();
       });
   };
 

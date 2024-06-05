@@ -1,6 +1,6 @@
 import {
-    useSignInWithFacebook,
-    useSignInWithGoogle,
+  useSignInWithFacebook,
+  useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
@@ -101,6 +101,9 @@ const SocialLogin = () => {
         .catch((err) => {
           console.log(err);
           toast.error(err.message);
+        })
+        .finally(() => {
+          window.location.reload();
         });
     } catch (err) {
       console.error("Error updating password:", err);

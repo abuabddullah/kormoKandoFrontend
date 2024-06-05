@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {
-    useAuthState,
-    useSignInWithEmailAndPassword,
+  useAuthState,
+  useSignInWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { LuArrowLeftToLine } from "react-icons/lu";
@@ -49,9 +49,9 @@ const Login = () => {
         } catch (err) {
           console.log(err);
           toast.error(err.message);
+        } finally {
+          window.location.reload();
         }
-        localStorage.setItem("token", data?.token);
-        toast.success("Login Success");
       })
       .catch((err) => {
         console.log(err);
